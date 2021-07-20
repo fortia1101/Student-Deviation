@@ -4,7 +4,7 @@
 目標：生徒と生徒の得点を入力していくだけで自動的に偏差値を表示するプログラムの作成
 """
 from datetime import datetime
-import sys, csv, os
+import sys, csv, os, pprint
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -126,7 +126,7 @@ f_altered_time = '{0:%y/%m/%d %H:%M:%S}'.format(time)
 
 print('---------------------------------------------------')
 print('\n＜成績表＞\n\n※[(出席番号, 名前, 得点, 標準偏差)]で表示されます')
-print(Student_Grades)
+pprint(Student_Grades)
 print(f'\nGenerated：{f_altered_time}\n')
 
 
