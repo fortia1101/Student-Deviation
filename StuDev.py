@@ -7,8 +7,10 @@ from datetime import datetime
 import sys, csv, os, pprint
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
+'''
 roop = int(input('生徒の総数を入力>> '))
 
 n = 1
@@ -147,20 +149,79 @@ def GenerateCSV():
     f.close()
 
 GenerateCSV()
+'''
 
 
-
-##頻度のグラフ化
+##点数分布のグラフ化
 def MakeGragh():
     open_file = input("グラフ化したいcsvファイルを入力>> ")
     if not os.path.isfile(open_file):
         return f"ファイル:{open_file}は存在しません"
 
-    data_set = np.loadtxt(fname=open_file, dtype='float', delimiter=',')
+    df = pd.read_csv(open_file, index_col=0) #index_col：0行目を見出しとして読み込む
     #csvファイルの読み込み
+
+    data_set = df.values #dfをndarrayに変換
+
+    freq_dict = {}
+    for i in range(0, 101):
+        freq_dict[i] = 0
     for data in data_set:
-        print(data[0])
-        print(data[1])
-        print(data[2])
+        x = data[1]
+        if (x>=0) and (x<5):
+            freq_dict[0] += 1
+        elif (x>=5) and (x<10):
+            freq_dict[5] += 1
+        elif (x>=10) and (x<15):
+            freq_dict[10] += 1
+        elif (x>=15) and (x<20):
+            freq_dict[15] += 1
+        elif (x>=20) and (x<25):
+            freq_dict[20] += 1
+        elif (x>=25) and (x<30):
+            freq_dict[25] += 1
+        elif (x>=30) and (x<35):
+            freq_dict[30] += 1
+        elif (x>=35) and (x<40):
+            freq_dict[35] += 1
+        elif (x>=40) and (x<45):
+            freq_dict[40] += 1
+        elif (x>=45) and (x<50):
+            freq_dict[45] += 1
+        elif (x>=50) and (x<55):
+            freq_dict[50] += 1
+        elif (x>=55) and (x<60):
+            freq_dict[55] += 1
+        elif (x>=60) and (x<65):
+            freq_dict[60] += 1
+        elif (x>=65) and (x<70):
+            freq_dict[65] += 1
+        elif (x>=70) and (x<75):
+            freq_dict[70] += 1
+        elif (x>=75) and (x<80):
+            freq_dict[75] += 1
+        elif (x>=80) and (x<85):
+            freq_dict[80] += 1
+        elif (x>=85) and (x<90):
+            freq_dict[85] += 1
+        elif (x>=90) and (x<95):
+            freq_dict[90] += 1
+        elif (x>=95) and (x<100):
+            freq_dict[95] += 1
+        else:
+            freq_dict[100] += 1
+
+    freq_list = sorted(freq_dict.items()) #keyでソートした新たなリストを生成
+
+    ##グラフの描画
+    left = []
+    height = []
+    for element in freq_list:
+        left.append(element[0])
+        height.append(element[1])
+
+    plt.title(open_file)
+    plt.bar(left, height, color="#FF5B70", width=5.0)
+    plt.show()
 
 MakeGragh()
