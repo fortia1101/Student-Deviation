@@ -30,6 +30,9 @@ class StudentList:
         while n <= roop:
             n += 1
             name = input('生徒の名前を入力>> ')
+            if name == '':
+                break
+                #エラー処理
             student_name.append(name)
         student_name.sort(reverse = False)
         #五十音順に並び替え
@@ -62,7 +65,11 @@ class StudentList:
         n = 1
         while n <= roop:
             n += 1
-            score = int(input('生徒の得点を入力（ただし名簿順）>> '))
+            score = input('生徒の得点を入力（ただし名簿順）>> ')
+            if score == '':
+                break
+                #エラー処理
+            score = int(score)
             student_score.append(score)
             #.append()に,end=''は使えない
 
@@ -127,7 +134,7 @@ f_altered_time = '{0:%y/%m/%d %H:%M:%S}'.format(time)
 
 print('---------------------------------------------------')
 print('\n＜成績表＞\n\n※[(出席番号, 名前, 得点, 標準偏差)]で表示されます')
-pprint(Student_Grades)
+print(Student_Grades)
 print(f'\nGenerated：{f_altered_time}\n')
 
 
@@ -162,52 +169,18 @@ def MakeGragh():
     data_set = df.values #dfをndarrayに変換
 
     freq_dict = {}
-    for i in range(0, 101):
+    for i in range(0, 101, 5):
         freq_dict[i] = 0
+
     for data in data_set:
         x = data[1]
-        if (x>=0) and (x<5):
-            freq_dict[0] += 1
-        elif (x>=5) and (x<10):
-            freq_dict[5] += 1
-        elif (x>=10) and (x<15):
-            freq_dict[10] += 1
-        elif (x>=15) and (x<20):
-            freq_dict[15] += 1
-        elif (x>=20) and (x<25):
-            freq_dict[20] += 1
-        elif (x>=25) and (x<30):
-            freq_dict[25] += 1
-        elif (x>=30) and (x<35):
-            freq_dict[30] += 1
-        elif (x>=35) and (x<40):
-            freq_dict[35] += 1
-        elif (x>=40) and (x<45):
-            freq_dict[40] += 1
-        elif (x>=45) and (x<50):
-            freq_dict[45] += 1
-        elif (x>=50) and (x<55):
-            freq_dict[50] += 1
-        elif (x>=55) and (x<60):
-            freq_dict[55] += 1
-        elif (x>=60) and (x<65):
-            freq_dict[60] += 1
-        elif (x>=65) and (x<70):
-            freq_dict[65] += 1
-        elif (x>=70) and (x<75):
-            freq_dict[70] += 1
-        elif (x>=75) and (x<80):
-            freq_dict[75] += 1
-        elif (x>=80) and (x<85):
-            freq_dict[80] += 1
-        elif (x>=85) and (x<90):
-            freq_dict[85] += 1
-        elif (x>=90) and (x<95):
-            freq_dict[90] += 1
-        elif (x>=95) and (x<100):
-            freq_dict[95] += 1
-        else:
-            freq_dict[100] += 1
+        for i in range(0, 96, 5):
+            if (x>=i) and (x<i+5):
+                freq_dict[i] += 1
+            elif x == 100:
+                freq_dict[100] += 1
+            else:
+                continue
 
     freq_list = sorted(freq_dict.items()) #keyでソートした新たなリストを生成
 
@@ -218,8 +191,13 @@ def MakeGragh():
         left.append(element[0])
         height.append(element[1])
 
+    xticks = []
+    for i in range(0, 101, 5):
+        xticks.append(i) #x軸の値
+
     plt.title(open_file)
-    plt.bar(left, height, color="#FF5B70", width=5.0)
+    plt.bar(left, height, color="#FF5B70", width=5.0, align="edge", linewidth=0.5, edgecolor="#000000")
+    plt.xticks(xticks)
     plt.show()
 
 MakeGragh()
