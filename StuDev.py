@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 
 
-'''
 roop = int(input('生徒の総数を入力>> '))
 
 n = 1
@@ -149,7 +148,6 @@ def GenerateCSV():
     f.close()
 
 GenerateCSV()
-'''
 
 
 ##点数分布のグラフ化
